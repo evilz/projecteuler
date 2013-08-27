@@ -1,0 +1,6 @@
+\\psf\home\Documents\Visual Studio 2012\Projects\projecteuler\projecteuler\bin\Debug\projecteuler.exe.config
+\\psf\home\Documents\Visual Studio 2012\Projects\projecteuler\projecteuler\bin\Debug\projecteuler.exe
+\\psf\home\Documents\Visual Studio 2012\Projects\projecteuler\projecteuler\bin\Debug\projecteuler.pdb
+\\psf\home\Documents\Visual Studio 2012\Projects\projecteuler\projecteuler\obj\Debug\projecteuler.csprojResolveAssemblyReference.cache
+\\psf\home\Documents\Visual Studio 2012\Projects\projecteuler\projecteuler\obj\Debug\projecteuler.exe
+\\psf\home\Documents\Visual Studio 2012\Projects\projecteuler\projecteuler\obj\Debug\projecteuler.pdb
