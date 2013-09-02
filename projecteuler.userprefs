@@ -1,16 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="projecteuler/ProbemManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="projecteuler/Problems/problem3.cs">
     <Files>
-      <File FileName="projecteuler/Program.cs" Line="4" Column="6" />
-      <File FileName="projecteuler/Problems/problem1.cs" Line="23" Column="14" />
-      <File FileName="projecteuler/IProblem.cs" Line="5" Column="16" />
-      <File FileName="projecteuler/ProbemManager.cs" Line="24" Column="43" />
+      <File FileName="projecteuler/ProbemManager.cs" Line="55" Column="1" />
+      <File FileName="projecteuler/Problems/problem3.cs" Line="47" Column="9" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="projecteuler" expanded="True" selected="True">
+        <State expanded="True" selected="True">
+          <Node name="projecteuler" expanded="True">
             <Node name="Problems" expanded="True" />
             <Node name="Properties" expanded="True" />
           </Node>

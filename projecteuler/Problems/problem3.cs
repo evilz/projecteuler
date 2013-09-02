@@ -32,29 +32,14 @@ namespace Projecteuler
 
         #endregion
 
-        public static PrimeTreeNone FindPrimes(long number)
-        {
-            PrimeTreeNone node = new PrimeTreeNone(number);
-            for (int i = 2; i < number; i++)
-            {
-                if (number % i == 0)
-                {
-                    node.Left = FindPrimes(i);
-                    node.Right = FindPrimes(number / i);
-                    return node;
-                }
-            }
-            return node;
-        }
-
-        public  IEnumerable<long> PrimeNumbers(long source)
+        public static IEnumerable<long> PrimeNumbers(long source)
         {
             while (source > 1)
             {
-                var divider =
-                    (from i in LongRange(2, source)
-                     where (source % i == 0) || (source == i)
-                     select i).First();
+                var divider = (
+                    from i in LongRange(2, source)
+                    where (source % i == 0) || (source == i)
+                    select i).First();
                 yield return divider;
                 source = source / divider;
             }
@@ -65,17 +50,5 @@ namespace Projecteuler
             for (long l = start; l <= end; l++)
                 yield return l;
         }
-    }
-
-    public class PrimeTreeNone
-    {
-        public PrimeTreeNone(long number)
-        {
-            Prime = number;
-        }
-
-        public long Prime;
-        public PrimeTreeNone Left;
-        public PrimeTreeNone Right;
     }
 }
