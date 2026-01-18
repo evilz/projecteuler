@@ -8,6 +8,12 @@
         <Markup Content="@AnswerDisplay"
                 Foreground="@AnswerColor"
                 Decoration="@AnswerDecoration" />
+        @if (!string.IsNullOrEmpty(_answer) && !string.IsNullOrEmpty(Explanation))
+        {
+            <Newline />
+            <Markup Content="@ExplanationDisplay"
+                    Foreground="Color.Cyan1" />
+        }
         <Newline />
         <Columns>
             <TextButton Content=" Solve "
@@ -25,6 +31,7 @@
 
     protected virtual int Ref => 0;
     protected virtual string Description => "No Description";
+    protected virtual string Explanation => string.Empty;
     protected virtual long Resolve() => 0;
 
     private string Title => $"Problem {Ref}";
@@ -44,6 +51,7 @@
     }
 
     private string AnswerDisplay => _answer is null ? "Answer: (not solved)" : $"Answer: {_answer}";
+    private string ExplanationDisplay => $"Explanation: {Explanation}";
     private Color AnswerColor => _answer is null ? Color.Grey70 : Color.Green;
     private Decoration AnswerDecoration => _answer is null ? Decoration.Dim : Decoration.Bold;
 }
