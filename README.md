@@ -21,7 +21,7 @@ After launch, use the selector to choose a problem and press Enter to navigate.
 ## Routes
 
 - `/` – Home (instructions)
-- `/problem/1` … `/problem/4` – Problem pages
+- `/problem/1` … `/problem/10` – Problem pages
 
 ## CI
 
