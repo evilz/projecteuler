@@ -12,9 +12,25 @@ namespace Projecteuler
         {
             _problems = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
-                .Where(t => typeof(IProblem).IsAssignableFrom(t) && t.IsClass)
-                .Select(t => Activator.CreateInstance(t) as IProblem)
+                .Where(t => typeof(IProblem).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract && t.Name != "ProblemBase")
+                .Select(t => Activator.CreateInstance(t))
+                .OfType<IProblem>()
                 .ToDictionary(p => p.Ref, p => p);
+        }
+
+        public IReadOnlyList<IProblem> GetProblems()
+        {
+            return _problems
+                .Values
+                .OrderBy(problem => problem.Ref)
+                .ToList();
+        }
+
+        public IProblem? GetProblem(int problemRef)
+        {
+            return _problems.TryGetValue(problemRef, out var problem)
+                ? problem
+                : null;
         }
 
         public void Start()

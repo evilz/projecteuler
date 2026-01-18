@@ -1,0 +1,49 @@
+@namespace Projecteuler.Components.Problems
+@inherits ComponentBase
+
+<Panel Title="@Title" Border="BoxBorder.Rounded" Expand="true">
+    <Rows>
+        <Markup Content="@Description" />
+        <Newline />
+        <Markup Content="@AnswerDisplay"
+                Foreground="@AnswerColor"
+                Decoration="@AnswerDecoration" />
+        <Newline />
+        <Columns>
+            <TextButton Content=" Solve "
+                        OnClick="Solve"
+                        BackgroundColor="Color.Grey" FocusedColor="Color.DarkGreen" />
+            <TextButton Content=" Clear "
+                        OnClick="Clear"
+                        BackgroundColor="Color.Grey" FocusedColor="Color.DarkGreen" />
+        </Columns>
+    </Rows>
+</Panel>
+
+@code {
+    private string? _answer;
+
+    protected virtual int Ref => 0;
+    protected virtual string Description => "No Description";
+    protected virtual long Resolve() => 0;
+
+    private string Title => $"Problem {Ref}";
+
+    protected Task Solve()
+    {
+        _answer = Resolve().ToString();
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    protected Task Clear()
+    {
+        _answer = null;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private string AnswerDisplay => _answer is null ? "Answer: (not solved)" : $"Answer: {_answer}";
+    private Color AnswerColor => _answer is null ? Color.Grey70 : Color.Green;
+    private Decoration AnswerDecoration => _answer is null ? Decoration.Dim : Decoration.Bold;
+}

@@ -1,0 +1,35 @@
+@inherits LayoutComponentBase
+@inject NavigationManager Navigation
+@using Microsoft.AspNetCore.Components.Routing
+@using Spectre.Console
+@using RazorConsole.Components
+@namespace Projecteuler.Components
+
+<Rows>
+    <Figlet Content="Project Euler" Color="Color.Blue" />
+    <Markup Content="Solve Project Euler problems using RazorConsole." Foreground="@Color.Grey70" />
+    <Newline />
+
+    <Panel Title="Problem Selector" Border="BoxBorder.Rounded" Expand="true">
+        <Rows>
+            <Select Options="@_problemOptions"
+                    Value="@_selectedRef"
+                    ValueChanged="OnSelectionChanged"
+                    Placeholder="Choose a problem" />
+        </Rows>
+    </Panel>
+
+    <Newline />
+    @Body
+</Rows>
+
+@code {
+    private string[] _problemOptions = new[] { "1", "2", "3", "4" }; 
+    private string? _selectedRef;
+
+    private void OnSelectionChanged(string value)
+    {
+         _selectedRef = value;
+         Navigation.NavigateTo($"/problem/{value}");
+    }
+}
