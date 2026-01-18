@@ -18,7 +18,7 @@
 
     protected override long Resolve()
     {
-        return GeneratePrimes().Skip(10000).First();
+        return GeneratePrimes().ElementAt(10000);
     }
 
     private IEnumerable<long> GeneratePrimes()
