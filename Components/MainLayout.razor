@@ -1,55 +1,67 @@
 @inherits LayoutComponentBase
 @inject NavigationManager Navigation
-@using Microsoft.AspNetCore.Components.Routing
-@using Spectre.Console
-@using RazorConsole.Components
+@using System.Reflection
+@using Projecteuler.Components.Problems
 @namespace Projecteuler.Components
 
 <Rows>
-    <Figlet Content="Project Euler" Color="Color.Blue" />
-    <Markup Content="Solve Project Euler problems using RazorConsole." Foreground="@Color.Grey70" />
+    <Figlet Content="Project Euler"  Color="Color.Blue" />
     <Newline />
 
     <Panel Title="Problem Selector" Border="BoxBorder.Rounded" Expand="true">
         <Rows>
-            <Select Options="@_problemOptions.Select(num => _problemTitles[num]).ToArray()"
-                    Value="@(_selectedRef != null && _problemTitles.ContainsKey(_selectedRef) ? _problemTitles[_selectedRef] : null)"
-                    ValueChanged="@(value => OnSelectionChanged(_problemOptions.First(num => _problemTitles[num] == value)))"
-                    Placeholder="Choose a problem" />
+            <Select  Options="@_problemOptions.Select(num => _problemTitles[num]).ToArray()"
+                     Value="@(_selectedRef != null && _problemTitles.ContainsKey(_selectedRef) ? _problemTitles[_selectedRef] : null)"
+                     ValueChanged="@(value => OnSelectionChanged(_problemOptions.First(num => _problemTitles[num] == value)))"
+                     Placeholder=" Choose a problem "></Select>
         </Rows>
     </Panel>
-
+    
     <Newline />
     @Body
 </Rows>
 
 @code {
-    private Dictionary<string, string> _problemTitles = new Dictionary<string, string>
-    {
-        { "1", "1: Multiples of 3 or 5" },
-        { "2", "2: Even Fibonacci Numbers" },
-        { "3", "3: Largest Prime Factor" },
-        { "4", "4: Largest Palindrome Product" },
-        { "5", "5: Smallest Multiple" },
-        { "6", "6: Sum Square Difference" },
-        { "7", "7: 10 001st Prime" },
-        { "8", "8: Largest Product in a Series" },
-        { "9", "9: Special Pythagorean Triplet" },
-        { "10", "10: Summation of Primes" },
-        { "11", "11: Largest Product in a Grid" },
-        { "12", "12: Highly Divisible Triangular Number" },
-        { "13", "13: Large Sum" },
-        { "14", "14: Longest Collatz Sequence" },
-        { "15", "15: Lattice Paths" },
-        { "16", "16: Power Digit Sum" },
-        { "17", "17: Number Letter Counts" },
-        { "18", "18: Maximum Path Sum I" },
-        { "19", "19: Counting Sundays" },
-        { "20", "20: Factorial Digit Sum" }
-    };
-
-    private string[] _problemOptions = new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }; 
+    private Dictionary<string, string> _problemTitles = new();
+    private string[] _problemOptions = Array.Empty<string>();
     private string? _selectedRef;
+
+    protected override void OnInitialized()
+    {
+        var problems = new List<(int Id, string Title)>();
+        
+        var problemTypes = Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t => t.IsSubclassOf(typeof(ProblemBase)) && !t.IsAbstract);
+
+        foreach (var type in problemTypes)
+        {
+            try 
+            {
+                var instance = Activator.CreateInstance(type);
+                
+                var refProp = type.GetProperty("Ref", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                var titleProp = type.GetProperty("ProblemTitle", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+                if (refProp == null || titleProp == null) continue;
+                var id = (int)refProp.GetValue(instance)!;
+                var title = (string)titleProp.GetValue(instance)!;
+                problems.Add((id, title));
+            }
+            catch
+            {
+                // Ignore types that cannot be instantiated
+            }
+        }
+
+        var sortedProblems = problems.OrderBy(p => p.Id).ToList();
+
+        _problemTitles = sortedProblems.ToDictionary(
+            p => p.Id.ToString(), 
+            p => $"{p.Id}: {p.Title}"
+        );
+
+        _problemOptions = sortedProblems.Select(p => p.Id.ToString()).ToArray();
+    }
 
     private void OnSelectionChanged(string value)
     {
