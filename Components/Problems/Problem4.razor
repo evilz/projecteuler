@@ -13,6 +13,8 @@
 @code {
     protected override int Ref => 4;
 
+    protected override string ProblemTitle => "Largest Palindrome Product";
+
     protected override string Description => "A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 x 99.\n\nFind the largest palindrome made from the product of two 3-digit numbers.";
 
     protected override string Explanation => "We generate all products of two 3-digit numbers (100-999) and check if each product is a palindrome by comparing its string representation with its reverse. The maximum palindromic product is the answer.";

@@ -10,6 +10,8 @@
 @code {
     protected override int Ref => 19;
 
+    protected override string ProblemTitle => "Counting Sundays";
+
     protected override string Description => "You are given the following information, but you may prefer to do some research for yourself.\n\n• 1 Jan 1900 was a Monday.\n• Thirty days has September, April, June and November. All the rest have thirty-one, Saving February alone, Which has twenty-eight, rain or shine. And on leap years, twenty-nine.\n• A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.\n\nHow many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?";
 
     protected override string Explanation => "We iterate through each month from January 1901 to December 2000, tracking the day of the week. Starting from 1 Jan 1900 (Monday), we count forward through the days, checking if the 1st of each month falls on a Sunday (day 0 in our 0-6 system where Monday=1).";

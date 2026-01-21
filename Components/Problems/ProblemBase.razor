@@ -30,11 +30,12 @@
     private string? _answer;
 
     protected virtual int Ref => 0;
+    protected virtual string ProblemTitle => string.Empty;
     protected virtual string Description => "No Description";
     protected virtual string Explanation => string.Empty;
     protected virtual long Resolve() => 0;
 
-    private string Title => $"Problem {Ref}";
+    private string Title => string.IsNullOrEmpty(ProblemTitle) ? $"Problem {Ref}" : $"Problem {Ref}: {ProblemTitle}";
 
     protected Task Solve()
     {

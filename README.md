@@ -3,6 +3,10 @@ projecteuler
 
 Project Euler problems implemented as a RazorConsole (TUI) app using routing.
 
+## Screenshot
+
+![Project Euler Problem Selector](screenshot.png)
+
 ## How it works
 
 - Each problem is a routable Razor component with a route like `/problem/1`.
