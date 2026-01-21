@@ -5,7 +5,7 @@ Project Euler problems implemented as a RazorConsole (TUI) app using routing.
 
 ## Screenshot
 
-![Project Euler Problem Selector](screenshot.png)
+![Project Euler Problem Selector](https://github.com/user-attachments/assets/e51b9f87-29e3-4eae-9506-d99f2e7aca69)
 
 ## How it works
 
