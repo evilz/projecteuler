@@ -15,4 +15,10 @@
     <PackageReference Include="RazorConsole.Core" Version="0.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Exclude DownloadProblems directory from compilation -->
+    <Compile Remove="DownloadProblems/**/*.cs" />
+    <None Include="DownloadProblems/**/*.cs" />
+  </ItemGroup>
+
 </Project>

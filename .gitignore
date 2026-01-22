@@ -19,3 +19,7 @@ Thumbs.db
 
 # Python script temporary outputs
 test_problems.md
+
+# Exclude DownloadProblems project from main build
+DownloadProblems/bin/
+DownloadProblems/obj/

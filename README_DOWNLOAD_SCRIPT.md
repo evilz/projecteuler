@@ -1,6 +1,37 @@
-# Download Problems Script
+# Download Problems Scripts
 
-This script downloads all Project Euler problem information from projecteuler.net and creates a consolidated `problems.md` file.
+This repository contains scripts to download all Project Euler problem information from projecteuler.net and create a consolidated `problems.md` file.
+
+## Available Versions
+
+### C# Version (.NET 10)
+
+**Location:** `DownloadProblems/` directory
+
+**Requirements:** .NET 10 SDK
+
+**Usage:**
+```bash
+cd DownloadProblems
+dotnet run -- [arguments]
+```
+
+See [DownloadProblems/README.md](DownloadProblems/README.md) for detailed C# documentation.
+
+### Python Version
+
+**Location:** `download_problems.py` (root directory)
+
+**Requirements:** Python 3.6+, `requests`, `lxml`
+
+**Usage:**
+```bash
+python3 download_problems.py [arguments]
+```
+
+---
+
+## Python Version Details
 
 ## Requirements
 
