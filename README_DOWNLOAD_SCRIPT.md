@@ -45,11 +45,18 @@ python3 download_problems.py --test
 python3 download_problems.py --output my_problems.md
 ```
 
+### Custom Delay Between Requests
+
+```bash
+python3 download_problems.py --delay 1.0
+```
+
 ### Command Line Arguments
 
 - `--start N`: Starting problem number (default: 1)
 - `--end N`: Ending problem number (default: 969)
 - `--output FILE`: Output file name (default: problems.md)
+- `--delay SECONDS`: Delay between requests in seconds (default: 0.5)
 - `--test`: Test mode - only downloads problems 1-5
 
 ## How It Works
@@ -95,6 +102,9 @@ Problems 1 to 969
 ```bash
 # Download first 10 problems to a custom file
 python3 download_problems.py --start 1 --end 10 --output first_10_problems.md
+
+# Download all problems with a longer delay
+python3 download_problems.py --delay 1.0
 ```
 
 ## Notes

@@ -67,7 +67,7 @@ def get_problem_description(problem_ref):
         
         if pre_elements:
             # Get the raw HTML content from the pre tag
-            description_html = lxml_html.tostring(pre_elements[0], encoding='unicode', method='html')
+            description_html = lxml_html.tostring(pre_elements[0], encoding='unicode')
             # Remove the <pre> and </pre> tags
             description_html = description_html.replace('<pre>', '').replace('</pre>', '').strip()
             return description_html
@@ -77,7 +77,7 @@ def get_problem_description(problem_ref):
         return None
 
 
-def download_all_problems(start=1, end=969, output_file="problems.md"):
+def download_all_problems(start=1, end=969, output_file="problems.md", delay=0.5):
     """
     Download all problems and create a markdown file.
     
@@ -85,6 +85,7 @@ def download_all_problems(start=1, end=969, output_file="problems.md"):
         start: Starting problem number (default: 1)
         end: Ending problem number (default: 969)
         output_file: Output markdown file name (default: problems.md)
+        delay: Delay in seconds between requests (default: 0.5)
     """
     print(f"Downloading problems {start} to {end}...")
     print(f"Output file: {output_file}")
@@ -113,7 +114,7 @@ def download_all_problems(start=1, end=969, output_file="problems.md"):
                     f.write("---\n\n")
             
             # Be nice to the server - add a small delay
-            time.sleep(0.5)
+            time.sleep(delay)
     
     print(f"\n✓ Done! Problems saved to {output_file}")
 
@@ -126,12 +127,13 @@ if __name__ == "__main__":
     parser.add_argument('--start', type=int, default=1, help='Starting problem number (default: 1)')
     parser.add_argument('--end', type=int, default=969, help='Ending problem number (default: 969)')
     parser.add_argument('--output', type=str, default='problems.md', help='Output file (default: problems.md)')
+    parser.add_argument('--delay', type=float, default=0.5, help='Delay between requests in seconds (default: 0.5)')
     parser.add_argument('--test', action='store_true', help='Test mode - only download first 5 problems')
     
     args = parser.parse_args()
     
     if args.test:
         print("Running in test mode - downloading only problems 1-5")
-        download_all_problems(start=1, end=5, output_file=args.output)
+        download_all_problems(start=1, end=5, output_file=args.output, delay=args.delay)
     else:
-        download_all_problems(start=args.start, end=args.end, output_file=args.output)
+        download_all_problems(start=args.start, end=args.end, output_file=args.output, delay=args.delay)
