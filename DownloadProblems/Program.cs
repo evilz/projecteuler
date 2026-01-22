@@ -33,16 +33,37 @@ for (int i = 0; i < commandArgs.Length; i++)
     switch (commandArgs[i])
     {
         case "--start":
-            if (i + 1 < commandArgs.Length) start = int.Parse(commandArgs[++i]);
+            if (i + 1 < commandArgs.Length)
+            {
+                if (!int.TryParse(commandArgs[++i], out start))
+                {
+                    Console.Error.WriteLine($"Error: Invalid value for --start: {commandArgs[i]}");
+                    return;
+                }
+            }
             break;
         case "--end":
-            if (i + 1 < commandArgs.Length) end = int.Parse(commandArgs[++i]);
+            if (i + 1 < commandArgs.Length)
+            {
+                if (!int.TryParse(commandArgs[++i], out end))
+                {
+                    Console.Error.WriteLine($"Error: Invalid value for --end: {commandArgs[i]}");
+                    return;
+                }
+            }
             break;
         case "--output":
             if (i + 1 < commandArgs.Length) outputFile = commandArgs[++i];
             break;
         case "--delay":
-            if (i + 1 < commandArgs.Length) delay = double.Parse(commandArgs[++i]);
+            if (i + 1 < commandArgs.Length)
+            {
+                if (!double.TryParse(commandArgs[++i], out delay))
+                {
+                    Console.Error.WriteLine($"Error: Invalid value for --delay: {commandArgs[i]}");
+                    return;
+                }
+            }
             break;
         case "--test":
             testMode = true;
