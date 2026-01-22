@@ -10,10 +10,20 @@
 
     <Panel Title="Problem Selector" Border="BoxBorder.Rounded" Expand="true">
         <Rows>
-            <Select  Options="@_problemOptions.Select(num => _problemTitles[num]).ToArray()"
-                     Value="@(_selectedRef != null && _problemTitles.ContainsKey(_selectedRef) ? _problemTitles[_selectedRef] : null)"
-                     ValueChanged="@(value => OnSelectionChanged(_problemOptions.First(num => _problemTitles[num] == value)))"
+            <Select  Options="@_pagedOptions"
+                     Value="@SelectedTitle"
+                     ValueChanged="OnSelectionChangedFromTitle"
                      Placeholder=" Choose a problem "></Select>
+            <Newline />
+            <Columns>
+                <TextButton Content=" Prev "
+                            OnClick="PrevPage"
+                            BackgroundColor="Color.Grey" FocusedColor="Color.Lime" />
+                <Markup Content="@PageDisplay" Foreground="Color.Grey58" />
+                <TextButton Content=" Next "
+                            OnClick="NextPage"
+                            BackgroundColor="Color.Grey" FocusedColor="Color.Lime" />
+            </Columns>
         </Rows>
     </Panel>
     
@@ -24,7 +34,11 @@
 @code {
     private Dictionary<string, string> _problemTitles = new();
     private string[] _problemOptions = Array.Empty<string>();
+    private string[] _pagedOptions = Array.Empty<string>();
     private string? _selectedRef;
+    private int _pageIndex;
+    private int _pageCount;
+    private const int PageSize = 10;
 
     protected override void OnInitialized()
     {
@@ -61,11 +75,46 @@
         );
 
         _problemOptions = sortedProblems.Select(p => p.Id.ToString()).ToArray();
+        _pageCount = (int)Math.Ceiling(_problemOptions.Length / (double)PageSize);
+        _pageIndex = 0;
+        UpdatePageOptions();
     }
 
-    private void OnSelectionChanged(string value)
+    private string? SelectedTitle => _selectedRef != null && _problemTitles.ContainsKey(_selectedRef)
+        ? _problemTitles[_selectedRef]
+        : null;
+
+    private string PageDisplay => _pageCount == 0 ? string.Empty : $" Page {_pageIndex + 1} / {_pageCount} ";
+
+    private void OnSelectionChangedFromTitle(string value)
     {
-         _selectedRef = value;
-         Navigation.NavigateTo($"/problem/{value}");
+        if (string.IsNullOrWhiteSpace(value)) return;
+        var idPart = value.Split(':', 2)[0].Trim();
+        _selectedRef = idPart;
+        Navigation.NavigateTo($"/problem/{idPart}");
+    }
+
+    private void PrevPage()
+    {
+        if (_pageIndex <= 0) return;
+        _pageIndex--;
+        UpdatePageOptions();
+    }
+
+    private void NextPage()
+    {
+        if (_pageIndex >= _pageCount - 1) return;
+        _pageIndex++;
+        UpdatePageOptions();
+    }
+
+    private void UpdatePageOptions()
+    {
+        int start = _pageIndex * PageSize;
+        _pagedOptions = _problemOptions
+            .Skip(start)
+            .Take(PageSize)
+            .Select(id => _problemTitles[id])
+            .ToArray();
     }
 }
