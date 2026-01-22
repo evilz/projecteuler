@@ -136,18 +136,8 @@ static async Task<string?> GetProblemDescription(int problemRef, HttpClient clie
         
         var html = await response.Content.ReadAsStringAsync();
         
-        // Extract content between <pre> and </pre> tags
-        var preStart = html.IndexOf("<pre>");
-        if (preStart >= 0)
-        {
-            preStart += 5; // Move past <pre>
-            var preEnd = html.IndexOf("</pre>", preStart);
-            if (preEnd > preStart)
-            {
-                return html.Substring(preStart, preEnd - preStart).Trim();
-            }
-        }
-        return null;
+       
+        return html;
     }
     catch (Exception ex)
     {
